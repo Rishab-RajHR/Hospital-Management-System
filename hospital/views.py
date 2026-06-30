@@ -5,6 +5,9 @@ from django.contrib.auth import authenticate,logout,login
 def About(request):
     return render(request,'about.html')
 
+def Contact(request):
+    return render(request,'contact.html')
+
 def Index(request):
     if not request.user.is_staff:
         return redirect('login')
