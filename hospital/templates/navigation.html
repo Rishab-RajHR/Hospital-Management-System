@@ -26,10 +26,39 @@
   </button>
     <div class="collapse navbar-collapse" id="myMenu">
       <ul class="navbar-nav ms-auto text-center">
-         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a></li>
+
+             {% if not  request.user.is_staff %}
+         <li class="nav-item"><a class="nav-link" href="{'% url 'login' %}"><i class="fas fa-home"></i> Home</a></li>
          <li class="nav-item"><a class="nav-link" href="{% url 'about' %}"><i class="fas fa-address-card"></i> About</a></li>
          <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}"><i class="fas fa-phone-square"></i> Contact</a></li>
+         {% endif %}
         {% if request.user.is_staff %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'logout' %}">Doctor</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Add Doctor</a>
+              <a class="dropdown-item" href="#">View Doctor</a>
+          </div>
+         </li>
+
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'logout' %}">Patient</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Add Patient</a>
+              <a class="dropdown-item" href="#">View Patient</a>
+          </div>
+         </li>
+
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'logout' %}">Appointment</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Add Appointment</a>
+              <a class="dropdown-item" href="#">View Appointment</a>
+          </div>
+         </li>
+
+
          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
         {% endif %}
       </ul>
