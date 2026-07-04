@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from .models import *
 from django.contrib.auth import authenticate,logout,login
 
 def About(request):
@@ -36,3 +37,9 @@ def Logout_admin(request):
     logout(request)
     return redirect('login')   
     
+def View_Doctor(request):
+    if not request.user.is_staff:
+        return redirect('login')
+    doc = Doctor.objects.all()
+    d = {'doc':doc}
+    return render(request, 'view_doctor.html',d)
