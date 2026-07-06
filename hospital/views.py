@@ -43,3 +43,28 @@ def View_Doctor(request):
     doc = Doctor.objects.all()
     d = {'doc':doc}
     return render(request, 'view_doctor.html',d)
+
+
+def Add_Doctor(request):
+    error=""
+    if not request.user.is_staff:
+        return redirect('login')
+    if request.method=='POST':
+        n = request.POST['name']
+        c = request.POST['contact']
+        sp = request.POST['special']
+       
+        try:
+            Doctor.objects.create(name=n,mobile=c,special=sp)
+            error = "no"
+        except:
+            error = "yes"
+    d = {'error':error}            
+    return render(request,'add_doctor.html',d)
+
+def Delete_Doctor(request,pid):
+    if not request.user.is_staff:
+        return redirect('login')
+    doctor = Doctor.objects.get(id=pid)
+    doctor.delete()
+    return redirect('view_doctor')
