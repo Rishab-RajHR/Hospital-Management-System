@@ -103,3 +103,39 @@ def Delete_Patient(request,pid):
     patient.delete()
     return redirect('view_patient')
 
+
+def View_Appointment(request):
+    if not request.user.is_staff:
+        return redirect('login')
+    appoint = Appointment.objects.all()
+    d = {'appoint':appoint}
+    return render(request, 'view_appointment.html',d)
+
+def Add_Appointment(request):
+    error=""
+    if not request.user.is_staff:
+        return redirect('login')
+    doctor1 = Doctor.objects.all()
+    patient1 = Patient.objects.all()
+    if request.method=='POST':
+        d = request.POST['doctor']
+        p = request.POST['patient']
+        d1 = request.POST['date']
+        t1 = request.POST['time']
+        doctor = Doctor.objects.filter(name=d).first()
+        patient = Patient.objects.filter(name=p).first()
+        try:
+            Appointment.objects.create(doctor=d, patient=p, date=d1, time1=t1)
+            error = "no"
+        except:
+            error = "yes"
+    d = {'doctor':doctor1,'patient':patient1,'error':error}            
+    return render(request,'add_appointment.html',d)
+
+def Delete_Appointment(request,pid):
+    if not request.user.is_staff:
+        return redirect('login')
+    patient = Patient.objects.get(id=pid)
+    patient.delete()
+    return redirect('view_appointment')
+

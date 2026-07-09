@@ -17,7 +17,7 @@
       <label>Patient</label>
        <select name="patient" class="form-control">
           {% for i in patient %}
-           <option value="{{i.name}}">{{i.name}} [{i.id}]</option>
+           <option value="{{i.name}}">{{i.name}} [{{i.id}}]</option>
           {% endfor %}
       </select>
       <br>
